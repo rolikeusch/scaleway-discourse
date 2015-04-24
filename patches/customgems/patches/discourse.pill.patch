@@ -1,0 +1,35 @@
+--- discourse.pill	2015-04-24 13:31:36.325874632 +0000
++++ discourse.pill.hack	2015-04-24 13:32:06.726396304 +0000
+@@ -14,27 +14,6 @@
+ # Running bluepill as root? Use:
+ #Bluepill.application("discourse") do |app|
+ 
+-  # getting this to work was a nightmare
+-  # bundle exec spawns a process totally messing with the demonize option
+-  # so we suck the environment out and set it up first
+-  bootup_bundle = [ "#{ENV['HOME']}/.rvm/bin/rvm/bootup_bundle",
+-                    "/usr/local/rvm/bin/rvm/bootup_bundle",
+-                    `which bootup_bundle`.strip,
+-                  ].each do |location|
+-    if File.exist? location
+-      break location
+-    end
+-  end
+-  # XXX if none match, bootup_bundle is set to the array
+-
+-  if bootup_bundle
+-    app.environment = `env -i BUNDLE_GEMFILE=#{rails_root}/Gemfile #{bootup_bundle} exec env`.lines.inject({}) do |env_hash,l|
+-      kv = l.chomp.split('=',2)
+-      env_hash[kv[0]] = kv[1]
+-      env_hash
+-    end
+-  end
+-
+   app.environment ||= {}
+ 
+   # Load .env file if there is one
+@@ -136,3 +115,4 @@
+   end
+ 
+ end
++

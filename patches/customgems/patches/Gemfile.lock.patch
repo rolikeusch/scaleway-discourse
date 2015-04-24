@@ -1,0 +1,46 @@
+--- Gemfile.lock	2015-04-24 09:15:44.970374355 +0000
++++ Gemfile.lock.hack	2015-04-24 09:17:36.032272237 +0000
+@@ -1,4 +1,16 @@
+ PATH
++  remote: /var/www/discourse/customgems/libv8
++  specs:
++    libv8 (3.16.14.3)
++
++PATH
++  remote: /var/www/discourse/customgems/therubyracer
++  specs:
++    therubyracer (0.12.1)
++      libv8 (~> 3.16.14.0)
++      ref
++
++PATH
+   remote: vendor/gems/rails_multisite
+   specs:
+     rails_multisite (0.0.1)
+@@ -207,7 +219,6 @@
+     librarian (0.1.2)
+       highline
+       thor (~> 0.15)
+-    libv8 (3.16.14.7)
+     listen (0.7.3)
+     logster (0.1.6)
+     lru_redux (0.8.1)
+@@ -424,9 +435,6 @@
+       sprockets (~> 2.8)
+     stackprof (0.2.7)
+     stringex (2.5.2)
+-    therubyracer (0.12.1)
+-      libv8 (~> 3.16.14.0)
+-      ref
+     thin (1.6.3)
+       daemons (~> 1.0, >= 1.0.9)
+       eventmachine (~> 1.0)
+@@ -453,6 +461,8 @@
+       kgio (~> 2.6)
+       rack
+       raindrops (~> 0.7)
++    libv8!
++    therubyracer!
+ 
+ PLATFORMS
+   ruby
