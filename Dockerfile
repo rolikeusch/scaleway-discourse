@@ -64,7 +64,6 @@ RUN cd /var/www/discourse \
 # Install libv8 / therubyracer
 
 RUN cd /var/www/discourse/customgems \
-  && tar -xvf libv8_therubyracer.tar.gz \
   && cd libv8 \
   && bundle install \
   && cd pkg \
