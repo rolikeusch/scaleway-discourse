@@ -58,7 +58,7 @@ RUN cd /var/www/discourse/customgems \
 RUN cd /var/www/discourse \
   && patch Gemfile < customgems/patches/Gemfile.patch \
   && patch Gemfile.lock < customgems/patches/Gemfile.lock.patch \
-  && patch config/discourse.sample.pill < customgems/patches/discourse.pill.patch \
+  && patch config/discourse.pill.sample < customgems/patches/discourse.pill.sample.patch \
   && chown -R discourse:discourse /var/www/discourse
 
 # Install libv8 / therubyracer
@@ -103,11 +103,19 @@ RUN cd /var/www/discourse \
 RUN cp /var/www/discourse/config/nginx.global.conf /etc/nginx/conf.d/local-server.conf \
   && cp /var/www/discourse/config/nginx.sample.conf /etc/nginx/conf.d/discourse.conf
 
+RUN mkdir -p /var/nginx/cache
+
 # Configure Bluepill
 
 RUN gem install bluepill \
   && sudo su discourse -c "echo 'alias bluepill=\"NOEXEC_DISABLE=1 bluepill --no-privileged -c ~/.bluepill\"'" >> ~/.bash_aliases \
   && sudo su discourse -c '(crontab -l ; echo "@reboot RUBY_GC_MALLOC_LIMIT=90000000 RAILS_ROOT=/var/www/discourse RAILS_ENV=production NUM_WEBS=4 bluepill --no-privileged -c ~/.bluepill load /var/www/discourse/config/discourse.pill") | crontab -'
+
+ADD ./patches/etc/ /etc/
+
+RUN chmod +x /etc/rc.local \
+ && chmod +x /etc/update-motd.d/70-discourse \
+ && rm -rf /etc/nginx/sites-enabled/default
 
 # Clean rootfs from image-builder
 

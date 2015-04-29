@@ -1,12 +1,9 @@
---- discourse.pill	2015-04-24 13:31:36.325874632 +0000
-+++ discourse.pill.hack	2015-04-24 13:32:06.726396304 +0000
-@@ -14,27 +14,6 @@
- # Running bluepill as root? Use:
- #Bluepill.application("discourse") do |app|
- 
--  # getting this to work was a nightmare
--  # bundle exec spawns a process totally messing with the demonize option
--  # so we suck the environment out and set it up first
+--- discourse.pill.sample	2015-04-24 14:01:08.726372097 +0000
++++ discourse.pill.hack	2015-04-24 14:01:39.126896770 +0000
+@@ -17,23 +17,6 @@
+   # getting this to work was a nightmare
+   # bundle exec spawns a process totally messing with the demonize option
+   # so we suck the environment out and set it up first
 -  bootup_bundle = [ "#{ENV['HOME']}/.rvm/bin/rvm/bootup_bundle",
 -                    "/usr/local/rvm/bin/rvm/bootup_bundle",
 -                    `which bootup_bundle`.strip,
@@ -24,12 +21,6 @@
 -      env_hash
 -    end
 -  end
--
+ 
    app.environment ||= {}
  
-   # Load .env file if there is one
-@@ -136,3 +115,4 @@
-   end
- 
- end
-+
