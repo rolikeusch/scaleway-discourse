@@ -1,7 +1,7 @@
 DOCKER_NAMESPACE =	armbuild/
 NAME =			scw-app-discourse
 VERSION =		latest
-VERSION_ALIASES =	1.3.2 1.3 1
+VERSION_ALIASES =	1.2.3 1.2 1
 TITLE =			Discourse
 DESCRIPTION =		Discourse
 SOURCE_URL =		https://github.com/scaleway/image-app-discourse

@@ -48,7 +48,7 @@ RUN /etc/init.d/postgresql start \
 
 
 # Clone discourse
-ENV DISCOURSE_VERSION 1.3.2
+ENV DISCOURSE_VERSION 1.2.3
 RUN git clone git://github.com/discourse/discourse.git -b v${DISCOURSE_VERSION} /var/www/discourse
 
 
