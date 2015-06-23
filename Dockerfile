@@ -1,5 +1,5 @@
 ## -*- docker-image-name: "armbuild/scw-app-discourse:latest" -*-
-FROM armbuild/scw-distrib-ubuntu:trusty
+FROM armbuild/scw-distrib-ubuntu:vivid
 MAINTAINER Scaleway <opensource@scaleway.com> (@scaleway)
 
 
@@ -23,10 +23,10 @@ RUN apt-get -q update                   \
 		 libreadline6-dev libsqlite3-dev sqlite3 \
 		 autoconf libgdbm-dev libncurses5-dev \
 		 automake bison pkg-config libffi-dev \
-		 nodejs libruby2.0
+		 nodejs libruby2.1
 
 
-RUN ln -s /usr/lib/arm-linux-gnueabihf/libruby-2.0.so.2.0 /usr/lib/libruby.so.2.0
+RUN ln -s /usr/lib/arm-linux-gnueabihf/libruby-2.1.so.2.0 /usr/lib/libruby.so.2.1
 
 
 # Install the Bundler gem
@@ -49,11 +49,15 @@ RUN /etc/init.d/postgresql start \
 
 # Clone discourse
 ENV DISCOURSE_VERSION 1.2.3
-RUN git clone git://github.com/discourse/discourse.git -b v${DISCOURSE_VERSION} /var/www/discourse
+RUN git clone --depth 1 --branch v${DISCOURSE_VERSION} git://github.com/discourse/discourse.git /var/www/discourse
 
 
 # Upload patches
 ADD ./patches/customgems /var/www/discourse/customgems
+
+
+# Upgrade rubygem
+# RUN gem update --system
 
 
 RUN cd /var/www/discourse/customgems \
