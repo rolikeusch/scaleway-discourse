@@ -57,8 +57,8 @@ ADD ./patches/customgems /var/www/discourse/customgems
 
 
 RUN cd /var/www/discourse/customgems \
-  && wget https://fr-1.storage.online.net/gems/libv8_therubyracer.tar.gz \
-  && tar -xvf libv8_therubyracer.tar.gz \
+  && wget -q https://fr-1.storage.online.net/gems/libv8_therubyracer.tar.gz \
+  && tar -xf libv8_therubyracer.tar.gz \
   && rm -rf libv8_therubyracer.tar.gz
 
 

@@ -12,7 +12,5 @@ all:	docker-rules.mk
 docker-rules.mk:
 	wget -qO - http://j.mp/scw-builder | bash
 -include docker-rules.mk
-
-
 ## Here you can add custom commands and overrides
 
