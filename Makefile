@@ -1,7 +1,7 @@
 DOCKER_NAMESPACE =	armbuild/
 NAME =			scw-app-discourse
 VERSION =		latest
-VERSION_ALIASES =	14.10 14 latest utopic 1.2.3
+VERSION_ALIASES =	
 TITLE =			Discourse
 DESCRIPTION =		Discourse
 SOURCE_URL =		https://github.com/scaleway/image-app-discourse
