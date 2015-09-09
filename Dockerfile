@@ -104,14 +104,12 @@ RUN gem install bluepill \
   && sudo su discourse -c "echo 'alias bluepill=\"NOEXEC_DISABLE=1 bluepill --no-privileged -c ~/.bluepill\"'" >> ~/.bash_aliases \
   && sudo su discourse -c '(crontab -l ; echo "@reboot RUBY_GC_MALLOC_LIMIT=90000000 RAILS_ROOT=/var/www/discourse RAILS_ENV=production NUM_WEBS=4 bluepill --no-privileged -c ~/.bluepill load /var/www/discourse/config/discourse.pill") | crontab -'
 
-
 ADD ./patches/etc/ /etc/
-
+ADD ./patches/usr/ /usr/
 
 RUN chmod +x /etc/rc.local \
  && chmod +x /etc/update-motd.d/70-discourse \
  && rm -rf /etc/nginx/sites-enabled/default
-
 
 # Clean rootfs from image-builder
 RUN /usr/local/sbin/builder-leave

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# We need this extra script run ONCE on startup to initialize Discourse InstantApp
+
+sed -i "s/hostname.*/hostname = \"$(/usr/local/bin/oc-metadata --cached ID).pub.cloud.scaleway.com\"/g" /var/www/discourse/config/discourse.conf
+sed -i "s/mydestination = .*/mydestination = $(/usr/local/bin/oc-metadata --cached ID).pub.cloud.scaleway.com, localhost.localdomain, localhost/g" /etc/postfix/main.cf
+sed -i "s/myhostname = .*/myhostname = $(/usr/local/bin/oc-metadata --cached ID).pub.cloud.scaleway.com/g" /etc/postfix/main.cf
+sed -i "s/inet_interfaces = .*/inet_interfaces = localhost/g" /etc/postfix/main.cf
+
+# this service is only needed on the first boot so we remove it here.
+rm -f /etc/init/init-discourse.conf
+rm -f /usr/local/sbin/oc-init-discourse
