@@ -2,10 +2,8 @@
 FROM armbuild/scw-distrib-ubuntu:vivid
 MAINTAINER Scaleway <opensource@scaleway.com> (@scaleway)
 
-
 # Prepare rootfs for image-builder
 RUN /usr/local/sbin/builder-enter
-
 
 # Install packages
 RUN apt-get -q update                   \
@@ -25,18 +23,14 @@ RUN apt-get -q update                   \
 		 automake bison pkg-config libffi-dev \
 		 nodejs libruby2.1
 
-
-RUN ln -s /usr/lib/arm-linux-gnueabihf/libruby-2.1.so.2.0 /usr/lib/libruby.so.2.1
-
+RUN ln -s /usr/lib/arm-linux-gnueabihf/libruby-2.1.so.2.1 /usr/lib/libruby.so.2.0
 
 # Install the Bundler gem
 RUN gem install bundler --no-ri --no-rdoc \
   && bundle config --global jobs 4
 
-
-# Create git user for GitLab
+# Create git user for Discourse
 RUN adduser --disabled-login --gecos 'Discourse' discourse
-
 
 # Init database
 RUN /etc/init.d/postgresql start \
@@ -46,25 +40,22 @@ RUN /etc/init.d/postgresql start \
   && sudo su postgres -c "psql discourse -c 'CREATE EXTENSION pg_trgm;'" \
   && /etc/init.d/postgresql stop
 
-
 # Clone discourse
-ENV DISCOURSE_VERSION 1.2.3
+ENV DISCOURSE_VERSION 1.3.5
 RUN git clone --depth 1 --branch v${DISCOURSE_VERSION} git://github.com/discourse/discourse.git /var/www/discourse
-
 
 # Upload patches
 ADD ./patches/customgems /var/www/discourse/customgems
 
-
 # Upgrade rubygem
-# RUN gem update --system
-
+RUN gem update --system
 
 RUN cd /var/www/discourse/customgems \
   && wget -q https://fr-1.storage.online.net/gems/libv8_therubyracer.tar.gz \
   && tar -xf libv8_therubyracer.tar.gz \
-  && rm -rf libv8_therubyracer.tar.gz
-
+  && rm -rf libv8_therubyracer.tar.gz \
+  && mv libv8_therubyracer/* . \
+  && rm -rf libv8_therubyracer
 
 # Install Discourse
 RUN cd /var/www/discourse \
@@ -73,33 +64,26 @@ RUN cd /var/www/discourse \
   && patch config/discourse.pill.sample < customgems/patches/discourse.pill.sample.patch \
   && chown -R discourse:discourse /var/www/discourse
 
-
 # Install libv8 / therubyracer
-RUN cd /var/www/discourse/customgems \
-  && cd libv8 \
+RUN cd /var/www/discourse/customgems/libv8 \
   && bundle install \
   && cd pkg \
   && bundle exec gem install libv8-3.16.14.3-armv7l-linux.gem
 
-
-RUN cd /var/www/discourse/customgems \
-  && cd therubyracer \
+RUN cd /var/www/discourse/customgems/therubyracer \
   && bundle install \
   && cd pkg \
   && bundle exec gem install therubyracer-0.12.1.gem
 
-
 RUN chmod 1777 /tmp \
   && cd /var/www/discourse \
   && bundle install --no-deployment --without test development
-
 
 # Configure Discourse
 RUN cd /var/www/discourse/config \
   && cp discourse_defaults.conf discourse.conf \
   && cp discourse.pill.sample discourse.pill \
   && chown -R discourse:discourse /var/www/discourse
-
 
 # Init database
 RUN cd /var/www/discourse \
@@ -110,14 +94,10 @@ RUN cd /var/www/discourse \
   && /etc/init.d/redis-server stop \
   && /etc/init.d/postgresql stop
 
-
 # Configure Nginx
 RUN cp /var/www/discourse/config/nginx.global.conf /etc/nginx/conf.d/local-server.conf \
-  && cp /var/www/discourse/config/nginx.sample.conf /etc/nginx/conf.d/discourse.conf
-
-
-RUN mkdir -p /var/nginx/cache
-
+  && cp /var/www/discourse/config/nginx.sample.conf /etc/nginx/conf.d/discourse.conf \
+  && mkdir -p /var/nginx/cache
 
 # Configure Bluepill
 RUN gem install bluepill \

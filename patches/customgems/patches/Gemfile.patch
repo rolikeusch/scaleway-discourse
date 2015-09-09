@@ -1,8 +1,8 @@
---- Gemfile	2015-04-24 09:14:56.309542742 +0000
-+++ Gemfile.hack	2015-04-24 09:14:32.759140249 +0000
-@@ -159,7 +159,8 @@
+--- Gemfile	2015-09-09 13:55:21.975978766 +0000
++++ Gemfile.new	2015-09-09 13:58:23.519515204 +0000
+@@ -96,7 +96,8 @@
  # for sidekiq web
- gem 'sinatra', require: nil
+ gem 'sinatra', require: false
  
 -gem 'therubyracer'
 +gem 'libv8', path: '/var/www/discourse/customgems/libv8'
