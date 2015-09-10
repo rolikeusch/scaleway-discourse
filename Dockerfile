@@ -109,6 +109,7 @@ ADD ./patches/usr/ /usr/
 
 RUN chmod +x /etc/rc.local \
  && chmod +x /etc/update-motd.d/70-discourse \
+ && systemctl enable init-discourse \
  && rm -rf /etc/nginx/sites-enabled/default
 
 # Clean rootfs from image-builder

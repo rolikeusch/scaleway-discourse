@@ -8,5 +8,5 @@ sed -i "s/myhostname = .*/myhostname = $(/usr/local/bin/oc-metadata --cached ID)
 sed -i "s/inet_interfaces = .*/inet_interfaces = localhost/g" /etc/postfix/main.cf
 
 # this service is only needed on the first boot so we remove it here.
-rm -f /etc/init/init-discourse.conf
+rm -f /etc/systemd/system/init-discourse.service
 rm -f /usr/local/sbin/oc-init-discourse
