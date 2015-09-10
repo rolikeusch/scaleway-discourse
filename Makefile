@@ -6,6 +6,9 @@ TITLE =			Discourse
 DESCRIPTION =		Discourse
 SOURCE_URL =		https://github.com/scaleway/image-app-discourse
 
+IMAGE_VOLUME_SIZE =	50G
+IMAGE_BOOTSCRIPT =	stable
+IMAGE_NAME =		Discourse 1.2.3 (BETA)
 
 ## Image tools  (https://github.com/scaleway/image-tools)
 all:	docker-rules.mk
