@@ -4,7 +4,7 @@ VERSION =		latest
 VERSION_ALIASES =	1.3.5 1.3 1
 TITLE =			Discourse
 DESCRIPTION =		Discourse
-SOURCE_URL =		https://github.com/scaleway/image-app-discourse
+SOURCE_URL =		https://github.com/scaleway-community/scaleway-discourse
 VENDOR_URL =		https://www.discourse.org
 
 IMAGE_VOLUME_SIZE =	50G
