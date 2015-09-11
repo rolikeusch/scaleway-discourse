@@ -29,4 +29,4 @@ Test
 
 On a running instance:
 
-    $ SCRIPT=$(mktemp); curl -s https://raw.githubusercontent.com/scaleway/image-app-gitlab/master/test.bash > $SCRIPT; bash $SCRIPT
+    $ SCRIPT=$(mktemp); curl -s https://raw.githubusercontent.com/scaleway-community/scaleway-gitlab/master/test.bash > $SCRIPT; bash $SCRIPT

@@ -1,5 +1,5 @@
-## -*- docker-image-name: "armbuild/scw-app-discourse:latest" -*-
-FROM armbuild/scw-distrib-ubuntu:vivid
+## -*- docker-image-name: "scaleway/discourse:latest" -*-
+FROM scaleway/ubuntu:vivid
 MAINTAINER Scaleway <opensource@scaleway.com> (@scaleway)
 
 # Prepare rootfs for image-builder
