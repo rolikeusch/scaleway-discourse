@@ -1,5 +1,4 @@
-DOCKER_NAMESPACE =	armbuild/
-NAME =			scw-app-discourse
+NAME =			discourse
 VERSION =		latest
 VERSION_ALIASES =	1.3.5 1.3 1
 TITLE =			Discourse
